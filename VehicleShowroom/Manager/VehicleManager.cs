@@ -16,7 +16,7 @@ namespace VehicleShowroom.Manager
         private readonly VehicleRepository __vehicleRepository;
         private readonly VehicleFactory __vehicleFactory;
 
-        VehicleManager(VehicleRepository vehicleRepository, VehicleFactory vehicleFactory)
+        public VehicleManager(VehicleRepository vehicleRepository, VehicleFactory vehicleFactory)
         {
             this.__vehicleRepository = vehicleRepository;
             this.__vehicleFactory = vehicleFactory;
@@ -44,6 +44,21 @@ namespace VehicleShowroom.Manager
         public Vehicle GetVehicle(VehicleType vehicleType)
         {
             return __vehicleFactory.GetVehicle(vehicleType);
+        }
+
+        public void ShowVechileList(List<Vehicle> vehicles)
+        {
+            Q.ShowVechileList(vehicles);
+        }
+
+        public void CommandLineHelpInstruction()
+        {
+            Q.CommandLineHelpInstruction();
+        }
+
+        public void ExecuteCommand(int UserCommand)
+        {
+            Q.ExecuteCommand(UserCommand);
         }
     }
 }

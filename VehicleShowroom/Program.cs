@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using VehicleShowroom.Common.Enum;
 using VehicleShowroom.Entity;
+using VehicleShowroom.Factory;
+using VehicleShowroom.Manager;
+using VehicleShowroom.Repository;
 
 namespace VehicleShowroom
 {
     class Program
     {
         private readonly static List<Vehicle> vehicles;
+        private readonly static VehicleManager vehicleManager;
 
         static Program()
         {
+            vehicleManager = new VehicleManager
+                 (
+                new VehicleRepository(),
+                new VehicleFactory());
             vehicles = new List<Vehicle>()
             {
                 new NormalVehicle
@@ -25,7 +34,7 @@ namespace VehicleShowroom
                    EnginePower=12,
                    ModelNumber="v18",
                    TireSize=130,
-                   Turbo="v18 Turbo"
+                   Turbo="v18"
                 },
                new HeavyVehicle
                {
@@ -37,45 +46,37 @@ namespace VehicleShowroom
                }
             };
         }
+
+
         static void Main()
         {
-            Console.Write("Id");
-            Console.Write("\t" + "EnginePower");
-            Console.Write("\t" + "EngineType");
-            Console.Write("\t" + "ModelNumber");
-            Console.Write("\t" + "TireSize");
-            Console.Write("\t" + "Turbo");
-            Console.Write("\t" + "Weight");
-            Console.WriteLine();
-            foreach (var item in vehicles)
+            //vehicleManager.ShowVechileList(vehicles);
+
+            while (true)
             {
-                Console.Write(item.Id);
-                Console.Write("\t"+item.EnginePower);
-                Console.Write("\t" + item.EngineType);
-                Console.Write("\t" + item.ModelNumber);
-                Console.Write("\t" + item.TireSize);
-                
-                if (item.GetType() == typeof(NormalVehicle))
+                vehicleManager.CommandLineHelpInstruction();
+                Console.WriteLine("Please Press Command");
+                int UserCommand;
+                try
                 {
-                    Console.Write("\t" + "-");
-                    Console.Write("\t" + "-");
+                    UserCommand = Convert.ToInt32(Console.ReadLine());
+                    if (UserCommand == (int)Commandtype.Exit)
+                    {
+                        Console.WriteLine("You Press 4");
+                        break;
+                    }
+                    else
+                    {
+                        vehicleManager.ExecuteCommand(UserCommand);
+                    }
                 }
-                else if (item.GetType() == typeof(SportsVehicle))
+                catch (Exception ex)
                 {
-                    var items = (SportsVehicle)item;
-                Console.Write("\t"+items.Turbo);
-                    Console.Write("\t" + "-");
-                }
-                else if (item.GetType() == typeof(HeavyVehicle))
-                {
-                    HeavyVehicle items = (HeavyVehicle)item;
-                    Console.Write("\t" + "-");
-                    Console.Write("\t"+items.Weight);
+                    Console.WriteLine(ex.Message);
                 }
 
-                Console.WriteLine();
             }
-            
+            Console.WriteLine();
             Console.ReadKey();
         }
     }

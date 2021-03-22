@@ -10,7 +10,16 @@ namespace VehicleShowroom.Common.Enum
     {
         Oil = 1,
         Gas = 2,
-        Diesel=3
+        Diesel = 3
+    }
+
+    public enum Commandtype
+    {
+        Add = 1,
+        Remove = 2,
+        ShowVehicleList = 3,
+        Exit = 4,
+        ClearCommandLine = 5
     }
 
     public enum VehicleType
