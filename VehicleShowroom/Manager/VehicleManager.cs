@@ -61,14 +61,14 @@ namespace VehicleShowroom.Manager
             Q.VehicleTypeSelectInstruction();
         }
 
-        public Vehicle SetVechileData(Vehicle vehicle, long VehicleNextId)
+        public Vehicle SetVechileData(Vehicle vehicle, long VehicleNextId, ref long TotalVisitor)
         {
-            return Q.SetVechileData(vehicle, VehicleNextId);
+            return Q.SetVechileData(vehicle, VehicleNextId, ref TotalVisitor);
         }
 
-        public void ExecuteCommand(int UserCommand, ref VehicleManager __vehicleManager, ref List<Vehicle> vehicles)
+        public void ExecuteCommand(int UserCommand, ref VehicleManager __vehicleManager, ref List<Vehicle> vehicles, ref long TotalVisitor)
         {
-            Q.ExecuteCommand(UserCommand, ref __vehicleManager, ref vehicles);
+            Q.ExecuteCommand(UserCommand, ref __vehicleManager, ref vehicles, ref TotalVisitor);
         }
 
         public List<Vehicle> InItVehicles(List<Vehicle> vehicles)

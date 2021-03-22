@@ -12,9 +12,11 @@ namespace VehicleShowroom
     {
         private static List<Vehicle> vehicles;
         private static VehicleManager vehicleManager;
+        private static long TotalVisitor;
 
         static Program()
         {
+            TotalVisitor = 30;
             vehicleManager = new VehicleManager
                  (
                 new VehicleRepository(),
@@ -40,7 +42,7 @@ namespace VehicleShowroom
                     }
                     else
                     {
-                        vehicleManager.ExecuteCommand(UserCommand, ref vehicleManager, ref vehicles);
+                        vehicleManager.ExecuteCommand(UserCommand, ref vehicleManager, ref vehicles, ref TotalVisitor);
                     }
                 }
                 catch (Exception ex)

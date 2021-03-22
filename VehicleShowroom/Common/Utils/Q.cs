@@ -19,7 +19,7 @@ namespace VehicleShowroom.Common.Utils
         }
 
 
-        public static ref Vehicle SetVehicleTypeWiseData(ref Vehicle vehicle)
+        public static ref Vehicle SetVehicleTypeWiseData(ref Vehicle vehicle, ref long TotalVisitor)
         {
             if (vehicle.GetType() == typeof(NormalVehicle))
             {
@@ -27,6 +27,7 @@ namespace VehicleShowroom.Common.Utils
             }
             else if (vehicle.GetType() == typeof(SportsVehicle))
             {
+                TotalVisitor = TotalVisitor + 20;
                 var SportsVehicle = (SportsVehicle)vehicle;
                 Console.WriteLine("Give Vehicle Turbo");
                 SportsVehicle.Turbo = Console.ReadLine();
@@ -41,7 +42,7 @@ namespace VehicleShowroom.Common.Utils
             }
             return ref vehicle;
         }
-        public static Vehicle SetVechileData(Vehicle vehicle, long VehicleNextId)
+        public static Vehicle SetVechileData(Vehicle vehicle, long VehicleNextId, ref long TotalVisitor)
         {
             vehicle.Id = VehicleNextId;
             Console.WriteLine("Give Vehicle Engine Power");
@@ -50,7 +51,7 @@ namespace VehicleShowroom.Common.Utils
             vehicle.ModelNumber = Console.ReadLine();
             Console.WriteLine("Give Vehicle Tire Size");
             vehicle.TireSize = Convert.ToDouble(Console.ReadLine());
-            vehicle = SetVehicleTypeWiseData(ref vehicle);
+            vehicle = SetVehicleTypeWiseData(ref vehicle, ref TotalVisitor);
 
             return vehicle;
         }
@@ -70,11 +71,12 @@ namespace VehicleShowroom.Common.Utils
             Console.WriteLine("Press 4 for Exit");
             Console.WriteLine("Press 5 for Clear Command Line");
             Console.WriteLine("Press 6 for Command Line Help");
+            Console.WriteLine("Press 7 for Show Vehicle List With Total Visitor");
             Console.WriteLine();
         }
 
 
-        public static void ExecuteCommand(int UserCommand, ref VehicleManager vehicleManager, ref List<Vehicle> vehicles)
+        public static void ExecuteCommand(int UserCommand, ref VehicleManager vehicleManager, ref List<Vehicle> vehicles, ref long TotalVisitor)
         {
             if (UserCommand == (int)Commandtype.Add)
             {
@@ -82,7 +84,7 @@ namespace VehicleShowroom.Common.Utils
                 Int32 vehicleType = Convert.ToInt32(Console.ReadLine());
                 Vehicle vehicle = vehicleManager.GetVehicle((VehicleType)vehicleType);
                 long VehicleNextId = vehicleManager.GetNextId(vehicles);
-                vehicleManager.Add(vehicleManager.SetVechileData(vehicle, VehicleNextId), ref vehicles);
+                vehicleManager.Add(vehicleManager.SetVechileData(vehicle, VehicleNextId, ref TotalVisitor), ref vehicles);
             }
             else if (UserCommand == (int)Commandtype.Remove)
             {
@@ -95,6 +97,11 @@ namespace VehicleShowroom.Common.Utils
             }
             else if (UserCommand == (int)Commandtype.ShowVehicleList)
             {
+                vehicleManager.ShowVechileList(vehicles);
+            }
+            else if (UserCommand == (int)Commandtype.ShowVehicleListWithTotalVisitor)
+            {
+                Console.WriteLine("Total Visitor Is:" + TotalVisitor);
                 vehicleManager.ShowVechileList(vehicles);
             }
             else if (UserCommand == (int)Commandtype.ClearCommandLine)
