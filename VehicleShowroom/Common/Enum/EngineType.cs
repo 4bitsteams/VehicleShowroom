@@ -12,4 +12,11 @@ namespace VehicleShowroom.Common.Enum
         Gas = 2,
         Diesel=3
     }
+
+    public enum VehicleType
+    {
+        Normal = 1,
+        Sports = 2,
+        Heavy = 3
+    }
 }
