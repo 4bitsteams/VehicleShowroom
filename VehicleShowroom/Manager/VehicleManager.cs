@@ -48,7 +48,7 @@ namespace VehicleShowroom.Manager
 
         public void ShowVechileList(List<Vehicle> vehicles)
         {
-            Q.ShowVechileList(vehicles);
+            Q.ShowVehicleList(vehicles);
         }
 
         public void CommandLineHelpInstruction()

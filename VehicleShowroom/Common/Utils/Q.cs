@@ -142,8 +142,7 @@ namespace VehicleShowroom.Common.Utils
             return vehicles;
         }
 
-        //ToDo it is not permanent Solution . if property value length is more large then grid size will  broken . 
-        public static void ShowVechileList(List<Vehicle> vehicles)
+        public static void GenerateVehicleGridHeader()
         {
             Console.WriteLine("--------------------------------------------------------------------------------------");
             Console.Write("Id");
@@ -154,6 +153,10 @@ namespace VehicleShowroom.Common.Utils
             Console.Write("\t" + "Turbo");
             Console.Write("\t" + "Weight");
             Console.WriteLine();
+        }
+
+        public static void GenerateVehicleGridBody(List<Vehicle> vehicles)
+        {
             foreach (var item in vehicles)
             {
                 Console.Write(item.Id);
@@ -182,7 +185,19 @@ namespace VehicleShowroom.Common.Utils
                 Console.WriteLine();
 
             }
+        }
+
+        public static void GenerateVehicleGridFooter()
+        {
             Console.WriteLine("--------------------------------------------------------------------------------------");
+        }
+
+        //ToDo it is not permanent Solution . if property value length is more large then grid size will  broken . 
+        public static void ShowVehicleList(List<Vehicle> vehicles)
+        {
+            GenerateVehicleGridHeader();
+            GenerateVehicleGridBody(vehicles);
+            GenerateVehicleGridFooter();
         }
     }
 }
