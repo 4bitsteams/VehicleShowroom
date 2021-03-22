@@ -10,8 +10,8 @@ namespace VehicleShowroom
 {
     class Program
     {
-        private readonly static List<Vehicle> vehicles;
-        private readonly static VehicleManager vehicleManager;
+        private static List<Vehicle> vehicles;
+        private static VehicleManager vehicleManager;
 
         static Program()
         {
@@ -19,42 +19,15 @@ namespace VehicleShowroom
                  (
                 new VehicleRepository(),
                 new VehicleFactory());
-            vehicles = new List<Vehicle>()
-            {
-                new NormalVehicle
-                {
-                    Id=1,
-                    EnginePower=10,
-                    ModelNumber="v12",
-                    TireSize=120
-                },
-               new SportsVehicle
-                {
-                    Id=2,
-                   EnginePower=12,
-                   ModelNumber="v18",
-                   TireSize=130,
-                   Turbo="v18"
-                },
-               new HeavyVehicle
-               {
-                   Id=3,
-                   EnginePower=14,
-                   ModelNumber="v20",
-                   TireSize=100,
-                   Weight=120
-               }
-            };
+            vehicles = vehicleManager.InItVehicles(new List<Vehicle>());
         }
 
 
         static void Main()
         {
-            //vehicleManager.ShowVechileList(vehicles);
-
+            vehicleManager.CommandLineHelpInstruction();
             while (true)
             {
-                vehicleManager.CommandLineHelpInstruction();
                 Console.WriteLine("Please Press Command");
                 int UserCommand;
                 try
@@ -67,7 +40,7 @@ namespace VehicleShowroom
                     }
                     else
                     {
-                        vehicleManager.ExecuteCommand(UserCommand);
+                        vehicleManager.ExecuteCommand(UserCommand, ref vehicleManager, ref vehicles);
                     }
                 }
                 catch (Exception ex)

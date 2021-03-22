@@ -34,7 +34,7 @@ namespace VehicleShowroom.Repository
 
         public bool Remove(object id, ref List<Vehicle> entities)
         {
-            return entities.Remove(entities.Where(x => x.Id == (long)id).First());
+            return entities.Remove(entities.Where(x => x.Id == Convert.ToInt64(id)).First());
         }
 
         public bool Update(Vehicle entity, ref List<Vehicle> entities)

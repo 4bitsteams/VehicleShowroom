@@ -56,9 +56,24 @@ namespace VehicleShowroom.Manager
             Q.CommandLineHelpInstruction();
         }
 
-        public void ExecuteCommand(int UserCommand)
+        public void VehicleTypeSelectInstruction()
         {
-            Q.ExecuteCommand(UserCommand);
+            Q.VehicleTypeSelectInstruction();
+        }
+
+        public Vehicle SetVechileData(Vehicle vehicle, long VehicleNextId)
+        {
+            return Q.SetVechileData(vehicle, VehicleNextId);
+        }
+
+        public void ExecuteCommand(int UserCommand, ref VehicleManager __vehicleManager, ref List<Vehicle> vehicles)
+        {
+            Q.ExecuteCommand(UserCommand, ref __vehicleManager, ref vehicles);
+        }
+
+        public List<Vehicle> InItVehicles(List<Vehicle> vehicles)
+        {
+            return Q.InItVehicles(vehicles);
         }
     }
 }

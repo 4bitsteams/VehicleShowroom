@@ -19,7 +19,8 @@ namespace VehicleShowroom.Common.Enum
         Remove = 2,
         ShowVehicleList = 3,
         Exit = 4,
-        ClearCommandLine = 5
+        ClearCommandLine = 5,
+        CommandLineHelp = 6,
     }
 
     public enum VehicleType

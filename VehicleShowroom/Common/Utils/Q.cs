@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VehicleShowroom.Common.Enum;
 using VehicleShowroom.Entity;
+using VehicleShowroom.Manager;
 
 namespace VehicleShowroom.Common.Utils
 {
@@ -17,30 +18,50 @@ namespace VehicleShowroom.Common.Utils
             return entities.Max(x => x.Id) + 1;
         }
 
-        public static void ExecuteCommand(int UserCommand)
-        {
-            if (UserCommand == (int)Commandtype.Add)
-            {
-                Console.WriteLine("You Press 1");
-            }
-            else if (UserCommand == (int)Commandtype.Remove)
-            {
-                Console.WriteLine("You Press 2");
-            }
-            else if (UserCommand == (int)Commandtype.ShowVehicleList)
-            {
-                Console.WriteLine("You Press 3");
-            }
-            else if (UserCommand == (int)Commandtype.ClearCommandLine)
-            {
-                Console.Clear();
-            }
-            else
-            {
-                Console.WriteLine("Please Press Command Between 1 and 5");
-            }
-        }
 
+        public static ref Vehicle SetVehicleTypeWiseData(ref Vehicle vehicle)
+        {
+            if (vehicle.GetType() == typeof(NormalVehicle))
+            {
+
+            }
+            else if (vehicle.GetType() == typeof(SportsVehicle))
+            {
+                var SportsVehicle = (SportsVehicle)vehicle;
+                Console.WriteLine("Give Vehicle Turbo");
+                SportsVehicle.Turbo = Console.ReadLine();
+                vehicle = SportsVehicle;
+            }
+            else if (vehicle.GetType() == typeof(HeavyVehicle))
+            {
+                var HeavyVehicle = (HeavyVehicle)vehicle;
+                Console.WriteLine("Give Vehicle Weight");
+                HeavyVehicle.Weight = Convert.ToDouble(Console.ReadLine());
+                vehicle = HeavyVehicle;
+            }
+            return ref vehicle;
+        }
+        public static Vehicle SetVechileData(Vehicle vehicle, long VehicleNextId)
+        {
+            vehicle.Id = VehicleNextId;
+            Console.WriteLine("Give Vehicle Engine Power");
+            vehicle.EnginePower = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Give Vehicle Model Number");
+            vehicle.ModelNumber = Console.ReadLine();
+            Console.WriteLine("Give Vehicle Tire Size");
+            vehicle.TireSize = Convert.ToDouble(Console.ReadLine());
+            vehicle = SetVehicleTypeWiseData(ref vehicle);
+
+            return vehicle;
+        }
+        public static void VehicleTypeSelectInstruction()
+        {
+            Console.WriteLine("Select Vehicle Type");
+            Console.WriteLine("Press 1 for Normal Vehicle");
+            Console.WriteLine("Press 2 for Sports Vehicle");
+            Console.WriteLine("Press 3 for Heavy Vehicle");
+            Console.WriteLine("Please Press Command");
+        }
         public static void CommandLineHelpInstruction()
         {
             Console.WriteLine("Press 1 for Add Vehicle");
@@ -48,7 +69,77 @@ namespace VehicleShowroom.Common.Utils
             Console.WriteLine("Press 3 for Show Vehicle List");
             Console.WriteLine("Press 4 for Exit");
             Console.WriteLine("Press 5 for Clear Command Line");
+            Console.WriteLine("Press 6 for Command Line Help");
             Console.WriteLine();
+        }
+
+
+        public static void ExecuteCommand(int UserCommand, ref VehicleManager vehicleManager, ref List<Vehicle> vehicles)
+        {
+            if (UserCommand == (int)Commandtype.Add)
+            {
+                vehicleManager.VehicleTypeSelectInstruction();
+                Int32 vehicleType = Convert.ToInt32(Console.ReadLine());
+                Vehicle vehicle = vehicleManager.GetVehicle((VehicleType)vehicleType);
+                long VehicleNextId = vehicleManager.GetNextId(vehicles);
+                vehicleManager.Add(vehicleManager.SetVechileData(vehicle, VehicleNextId), ref vehicles);
+            }
+            else if (UserCommand == (int)Commandtype.Remove)
+            {
+                Console.WriteLine("Use Vehicle Id for Remove Vehicle");
+                vehicleManager.ShowVechileList(vehicles);
+                Console.WriteLine("Please Press Vehile Id");
+                object VehicleId = Convert.ToInt32(Console.ReadLine());
+                vehicleManager.Remove(VehicleId, ref vehicles);
+                Console.WriteLine("Remove Success VehicleId=" + VehicleId);
+            }
+            else if (UserCommand == (int)Commandtype.ShowVehicleList)
+            {
+                vehicleManager.ShowVechileList(vehicles);
+            }
+            else if (UserCommand == (int)Commandtype.ClearCommandLine)
+            {
+                Console.Clear();
+            }
+            else if (UserCommand == (int)Commandtype.CommandLineHelp)
+            {
+                vehicleManager.CommandLineHelpInstruction();
+            }
+            else
+            {
+                Console.WriteLine("Please Press Command Between 1 and 5");
+            }
+        }
+
+        //All Data Is Fake or Dummy Data
+        public static List<Vehicle> InItVehicles(List<Vehicle> vehicles)
+        {
+
+            vehicles.Add(new NormalVehicle
+            {
+                Id = 1,
+                EnginePower = 10,
+                ModelNumber = "v12",
+                TireSize = 120
+            });
+            vehicles.Add(new SportsVehicle
+            {
+                Id = 2,
+                EnginePower = 12,
+                ModelNumber = "v18",
+                TireSize = 130,
+                Turbo = "v18"
+            });
+            vehicles.Add(new HeavyVehicle
+            {
+                Id = 3,
+                EnginePower = 14,
+                ModelNumber = "v20",
+                TireSize = 100,
+                Weight = 120
+            });
+
+            return vehicles;
         }
 
         //ToDo it is not permanent Solution . if property value length is more large then grid size will  broken . 
