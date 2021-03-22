@@ -13,6 +13,6 @@ namespace VehicleShowroom.Entity
             this.EngineType = EngineType.Oil;
         }
 
-        public dynamic Turbo { get; set; }
+        public String Turbo { get; set; }
     }
 }

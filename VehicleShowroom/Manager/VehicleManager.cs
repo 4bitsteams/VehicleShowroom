@@ -13,22 +13,27 @@ namespace VehicleShowroom.Manager
 {
     public class VehicleManager
     {
-        private readonly VehicleRepository vehicleRepository;
-        private readonly VehicleFactory vehicleFactory;
+        private readonly VehicleRepository __vehicleRepository;
+        private readonly VehicleFactory __vehicleFactory;
 
+        VehicleManager(VehicleRepository vehicleRepository, VehicleFactory vehicleFactory)
+        {
+            this.__vehicleRepository = vehicleRepository;
+            this.__vehicleFactory = vehicleFactory;
+        }
         public long Add(Vehicle entity, ref List<Vehicle> entities)
         {
-            return vehicleRepository.Add(entity, ref entities);
+            return __vehicleRepository.Add(entity, ref entities);
         }
 
         public bool Remove(object id, ref List<Vehicle> entities)
         {
-            return vehicleRepository.Remove(id, ref entities);
+            return __vehicleRepository.Remove(id, ref entities);
         }
 
         public List<Vehicle> GetAll(ref List<Vehicle> entities)
         {
-            return vehicleRepository.GetAll(ref entities);
+            return __vehicleRepository.GetAll(ref entities);
         }
 
         public long GetNextId(List<Vehicle> entities)
@@ -38,7 +43,7 @@ namespace VehicleShowroom.Manager
 
         public Vehicle GetVehicle(VehicleType vehicleType)
         {
-            return vehicleFactory.GetVehicle(vehicleType);
+            return __vehicleFactory.GetVehicle(vehicleType);
         }
     }
 }
