@@ -8,7 +8,7 @@ namespace VehicleShowroom.Entity
 {
     public class HeavyVehicle : Vehicle
     {
-        HeavyVehicle()
+        public HeavyVehicle()
         {
             this.EngineType = EngineType.Diesel;
         }
